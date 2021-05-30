@@ -39,7 +39,7 @@ tags: ["React Native", "App"]
 
 ### 性能更好，用户体验接近原生
 
-是的，在一些简单的由 View 拼装的界面中，我很难感觉到各种交互有任何延时。不过，由于我只用 React Native 替换了 App 中某些部分，根据官方 repo 中的建议，需要在 React Native 页面还没被展示的时候，预先加载 RCTBridge 和 RCTRootView。这样做的后果是，在没有复杂页面的情况下，App 中 Swift 代码占的内存和 RCTRootView 起来后占的内存加起来有 120MB。不这样做的话，第一次展示 RCTRootView 时能明显地感觉到白屏。
+在一些简单的由 View 拼装的界面中，我很难感觉到各种交互有任何延时。不过，由于我只用 React Native 替换了 App 中某些部分，根据官方 repo 中的建议，需要在 React Native 页面还没被展示的时候，预先加载 RCTBridge 和 RCTRootView。这样做的后果是，在没有复杂页面的情况下，App 中 Swift 代码占的内存和 RCTRootView 起来后占的内存加起来有 120MB。不这样做的话，第一次展示 RCTRootView 时能明显地感觉到白屏。
 
 上面扯到的这些可能暴露了我对 React Native 片面的认知，如果讲错了还希望你能指正。
 
