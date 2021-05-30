@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Serverless on Lex.sh</title><link>https://lex.sh/tags/serverless/</link><description>Recent content in Serverless on Lex.sh</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 20 Nov 2016 19:12:44 +0800</lastBuildDate><atom:link href="https://lex.sh/tags/serverless/index.xml" rel="self" type="application/rss+xml"/><item><title>Serverless 简介</title><link>https://lex.sh/p/serverless-briefing/</link><pubDate>Sun, 20 Nov 2016 19:12:44 +0800</pubDate><guid>https://lex.sh/p/serverless-briefing/</guid><description>随着 PaaS、BaaS、SaaS 的流行，服务端开发和维护的工作变得更加便捷，大部分创业公司不再需要专职的运维，服务端开发人员即能搞定日常的服务器维护工作。而近几年，像 Parse、Firebase、CloudKit 这类连服务端开发人员都能省掉的方案更是受到不少创业公司的青睐。做一个 App 不再需要一堆人，试错的成本大大降低。
+而各种容器技术的不断进步，利用譬如 Docker 容器实现轻量级的服务器单元，一个新的服务端形态正在成形 —— Serverless，或称 FaaS (Functions as a Service)。下面从我个人的观感随便聊一下我理解的 Serverless。
+Serverless 主要应用表现为，功能以 function 为最小的单元，用户访问某个 function 时启动一个容器执行 function 内的程序，执行结束回收这个容器，整个过程快至几个毫秒就能完成。在某些应用场景下，能很好的代替持续在线的服务。
+目前最具代表性的 Serverless 解决方案当属亚马逊的 AWS Lambda，中小型的服务商如 Webtask、hyper.sh 等，Google Cloud Platform 也正在进行 Cloud Function 的内测。
+这些服务有类似的收费政策：按需付费，额度内免费，超额后每次请求计费。
+目前我了解到的使用场景不多，从 AWS Lambda 提供的各种介绍来看，我脑补一下 Serverless 适用场景：
+运算密集 —— 如图片压缩、数据分析。因为使用 Serverless 方案同一秒里可以运行千上万个 Lambda，能轻易实现传统架构无法实现的超强处理能力，并且只在使用时收费。
+为其它服务提供编程支持 —— 例如，当 AWS DynamoDB 数据发生变化时，调用 AWS Lambda 生成 PDF 报表。再如，为 AWS API Gateway 提供自定义权限验证脚本。</description></item></channel></rss>

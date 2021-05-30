@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lex.sh</title><link>https://lex.sh/</link><description>Recent content on Lex.sh</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 30 May 2021 09:29:12 +0800</lastBuildDate><atom:link href="https://lex.sh/index.xml" rel="self" type="application/rss+xml"/><item><title>Serverless 简介</title><link>https://lex.sh/p/serverless-briefing/</link><pubDate>Sun, 20 Nov 2016 19:12:44 +0800</pubDate><guid>https://lex.sh/p/serverless-briefing/</guid><description>&lt;p>随着 PaaS、BaaS、SaaS 的流行，服务端开发和维护的工作变得更加便捷，大部分创业公司不再需要专职的运维，服务端开发人员即能搞定日常的服务器维护工作。而近几年，像 Parse、Firebase、CloudKit 这类连服务端开发人员都能省掉的方案更是受到不少创业公司的青睐。做一个 App 不再需要一堆人，试错的成本大大降低。&lt;/p>
+&lt;p>而各种容器技术的不断进步，利用譬如 Docker 容器实现轻量级的服务器单元，一个新的服务端形态正在成形 —— Serverless，或称 FaaS (Functions as a Service)。下面从我个人的观感随便聊一下我理解的 Serverless。&lt;/p>
+&lt;p>Serverless 主要应用表现为，功能以 function 为最小的单元，用户访问某个 function 时启动一个容器执行 function 内的程序，执行结束回收这个容器，整个过程快至几个毫秒就能完成。在某些应用场景下，能很好的代替持续在线的服务。&lt;/p>
+&lt;p>目前最具代表性的 Serverless 解决方案当属亚马逊的 &lt;a class="link" href="https://aws.amazon.com/lambda/details/" target="_blank" rel="noopener"
+>AWS Lambda&lt;/a>，中小型的服务商如 &lt;a class="link" href="https://webtask.io" target="_blank" rel="noopener"
+>Webtask&lt;/a>、&lt;a class="link" href="https://hyper.sh" target="_blank" rel="noopener"
+>hyper.sh&lt;/a> 等，Google Cloud Platform 也正在进行 Cloud Function 的内测。&lt;/p>
+&lt;p>这些服务有类似的收费政策：按需付费，额度内免费，超额后每次请求计费。&lt;/p>
+&lt;p>目前我了解到的使用场景不多，从 AWS Lambda 提供的各种介绍来看，我脑补一下 Serverless 适用场景：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>运算密集 —— 如图片压缩、数据分析。因为使用 Serverless 方案同一秒里可以运行千上万个 Lambda，能轻易实现传统架构无法实现的超强处理能力，并且只在使用时收费。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>为其它服务提供编程支持 —— 例如，当 AWS DynamoDB 数据发生变化时，调用 AWS Lambda 生成 PDF 报表。再如，为 AWS API Gateway 提供自定义权限验证脚本。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>定时任务 —— 以往使用 cron 编写的定时任务可以改用 AWS Lambda 实现，很明显的好处是任务不执行的时候完全不收费。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>瘦容器 —— 因为 AWS Lambda 本身基于 Docker 容器实现，Lambda 方法跑在 Amazon Linux AMI 中，虽然官方支持的编程语言只有 NodeJS、Java、Python，但其实可以用 NodeJS 的 shim 运行大部分能在 Linux 下运行的程序。以至于有人用这个特性做了 &lt;a class="link" href="https://github.com/lambci/lambci" target="_blank" rel="noopener"
+>LambCI&lt;/a> 这种脑洞大开的 Serverless CI 服务。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>无人运维 —— Serverless 的核心优势就是不需要管理服务器，自伸缩的特性如果用传统方案解决会相对复杂很多。如果你需要一个服务为你跑好几年，期间完全不需要担心它的服务器运行情况，Serverless 会是最好的选择。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>当然 Serverless 的也不尽是优点，它也有一些局限性或者说是相对传统架构的短板，不过也仅仅体现在现在的 AWS Lambda 上，相信以后会有改善：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>生命周期短 —— 一个 Lambda 最多只能跑 5 分钟，所以想用它跑 ffmpeg/mencode 来处理高清视频的话得想周到，可以考虑切片分断处理，不过那就复杂了。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Linux only —— 想做一个 macOS 的 CI 服务目前是不可能的。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>语言限制 —— 除了 NodeJS、Java、Python 以外，其它程序都只能通过 shim 来运行，调试相对麻烦。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>部署操作繁多 —— 针对第这个问题，已经有不少解决方案，如 &lt;a class="link" href="http://gosparta.io" target="_blank" rel="noopener"
+>Sparta&lt;/a>、&lt;a class="link" href="http://apex.run" target="_blank" rel="noopener"
+>Apex&lt;/a>、&lt;a class="link" href="https://webtask.io" target="_blank" rel="noopener"
+>Webtask&lt;/a>、&lt;a class="link" href="https://serverless.com" target="_blank" rel="noopener"
+>Serverless&lt;/a> 都在简化 Lambda 部署的工作上给出了各种答案。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>由于上面提到的这些特性，我觉得 Serverless 这个概念非常适合 App 开发人员深入研究。它就像是一个永远不会倒闭的 Parse Cloud Function (哇，顺路吐槽 Facebook 了~~)，或者说是你身边 24 小时在线的运维朋友，亦或说是你的开机最快的一台电脑(实测用 AWS Lambda 运行一个 Swift 写的 Hello World 只要 16ms)。&lt;/p>
+&lt;p>于是，我开始借肋 Apex，在 AWS Lambda 上用 Go 来写 Serverless 程序。为什么没用 Swift 呢？因为服务端的 Swift 库实在太少了，缺的轮子太多。而且 Swift 依赖相对较多，一个 HelloWorld.swift 要在 AWS Lambda 里跑起来差不多需要 16MB 的空间，同样的 Go 只要 2MB，而且 Go 的工具链非常强大。如果有兴趣在 AWS Lambda 里运行 Swift 程序，可以参考&lt;a class="link" href="https://medium.com/@gigq/using-swift-in-aws-lambda-6e2a67a27e03#.qwdpdzby9" target="_blank" rel="noopener"
+>这篇文章&lt;/a>。&lt;/p></description></item><item><title>为什么改用 Carthage</title><link>https://lex.sh/p/why-carthage/</link><pubDate>Sun, 10 Jul 2016 19:40:02 +0800</pubDate><guid>https://lex.sh/p/why-carthage/</guid><description>&lt;p>在这个几乎每一个开源 iOS 第三方组件都支持 &lt;a class="link" href="https://github.com/CocoaPods/CocoaPods" target="_blank" rel="noopener"
+>CocoaPods&lt;/a> 的时代，为什么要选择另一个组件支持数量少、项目配置相对繁琐、无法直接查看组件源码的包管理工具呢？
+&lt;a class="link" href="https://github.com/carthage/carthage" target="_blank" rel="noopener"
+>Carthage&lt;/a> 到底好在哪呢？&lt;/p>
+&lt;p>最初看到 Carthage 第一眼就被「去中心化」这个高大上的名词给吓到了，但是它并不是个很复杂的事。在项目中，原来我们把一个组件做成 Pod，需要写 Podspec，用 development pod 或者更新 Specs 仓库的项目，私有组件还要更新、指定自己的 Specs 源。&lt;/p>
+&lt;p>最早 CocoaPods 还没有流行的时候，我曾是 CocoaPods/Specs 仓库的主要贡献者之一。当时第三方组件默认的安装方式就是拖拽和 git submodule，CocoaPods 为了推广自己，有一个建议第三方仓库支持 CocoaPods 的文字模板，以 issue 的形式发到对方的仓库里。让仓库拥有者辛辛苦苦地写一个 podspec，还要更新 README 一般都要等上好几天，而且很难一次就做对。所以最好都是帮对方写好 podspec，改好 README，发 Pull Request，再代为更新 CocoaPods/Specs 仓库，非常费事费力。&lt;/p>
+&lt;p>而组件支持 Carthage 的唯一要求就是，项目的里有一个 shared Framework target 存在。每次更新组件都不需要去更新任何 Podspec 或 Specs 仓库。私有仓库不需要额外设置 Specs 仓库，不需要 pod trunk。去中心化，意义非凡。&lt;/p>
+&lt;p>另一个 Carthage 的设计优势是，先天只支持 Dynamic Framework，只在更新时编译，这是为 Swift 项目量身定制的特性。在发版本时不需编译所有依赖，在项目 clean 时不需要重新编译所有依赖，开发者只有在用 carthage update 更新组件后才需要重新编译组件，而且一般只做一次。&lt;/p>
+&lt;p>另外组件作者可以进一步提供编译好的 Framework 压缩包，随 release 发布，节省使用者的编译时间。试想如果项目中的每一个依赖都这么做了，carthage update 会像 apt-get 一样又快又好用。&lt;/p>
+&lt;p>再来说说公认的缺点。项目配置的步骤的确不如写一个 Podfile 然后 pod install 那样简单，但其实也没有多么痛苦吧。Carthage 不会像 CocoaPods 那样对项目做大量改动，也没有要求一定要用 xcworkspace。甚至如果放弃打包 dsym，不用 copy-framework 脚本也是可以的。至于不能直接点到源码，可以用拖入 Carthage/checkouts 目录中的 xcproj 的方式来临时解决，这样就和使用 CocoaPods 或 git submodule 差不多了。&lt;/p>
+&lt;p>最后分享近两年使用 Carthage 发现的一些小技巧，但我觉得是 Carthage 的 CLI 命令设计得比较奇葩。如：&lt;/p>
+&lt;ul>
+&lt;li>只更新不编译：&lt;code>carthage update --no-build&lt;/code>&lt;/li>
+&lt;li>只编译特定依赖的 iOS 版: &lt;code>carthage build --platform iOS RxSwift&lt;/code>&lt;/li>
+&lt;li>删除一个依赖的时候不需要重新 update，只要删除 Cartfile.resolved 中相应的行，和 Carthage 中的目录即可&lt;/li>
+&lt;li>如果经常用的库没有提供编译好的 Framework，可以 fork 一个自己提供，然后就不用每次都编译了&lt;/li>
+&lt;/ul>
+&lt;p>最后我想说的是，Carthage 并没有占据绝对的上峰，有很多常用组件如 Facebook 的大部分 SDK、Lookback SDK、Fabric Framework 等都不支持 Carthage。选择自己习惯的、适合当前项目的包管理工具，以及使用配置更好的 Mac 能省去不少时间。&lt;/p></description></item><item><title>我的 Linux 一万小时</title><link>https://lex.sh/p/linux10khrs/</link><pubDate>Sun, 15 May 2016 00:58:02 +0800</pubDate><guid>https://lex.sh/p/linux10khrs/</guid><description>&lt;p>这不是一篇鸡汤文，因为我并没有在使用 Linux 一万小时后成为 Linux 达人，甚至在很多方面，我连新手都算不上。我走的这些弯路能篇成一本很有参考价值的__反面教材__，下面，我来讲讲我用 Linux 都折腾了啥。&lt;/p>
+&lt;h4 id="gentoo">Gentoo&lt;/h4>
+&lt;p>在 Ubuntu 还没有出生的年代，各种发行版百花齐放。以包管理机制区分的话，可以分为两派：直接安装二进制可执行文件的和下载源码自行编译的，Gentoo 算是后者中一个比较知名的项目。为了使硬件发挥出更好的性能，Gentoo 的 emerge 命令提供了不少编译参数让用户调教。从内核到日常用的所有工具，都需要用包管理工具自动下载源码后编译，这对于像我这样的 Linux 新人来说的确能被动学习不少知识。而且每次编译满屏幕日志飞滚非常酷，改用绿色文字就有种黑客帝国的即视感。&lt;/p>
+&lt;p>不过，这个机制有个显而易见的缺点，有时候做一些很小的事情都需要花上好长时间编译大量的依赖包。而像我这样的强迫症，总觉得下一次编译换一个参数也许可以使程序运行得更快，以至于很多常用工具我都编译了不下三遍。另外编译内核和格式化硬盘重装 Gentoo 的事真是数也数不清了。最惨的是，有次同事让我帮忙装一台 1U，他用 Debian 可以分分钟把 LAMP 搞定上架，而我硬是想用 Gentoo 压榨性能。我编译了一个下午，反复编译内核浪费了大量时间没能把两块网卡搞定，最后无奈的让他上了 Debian。&lt;/p>
+&lt;p>Gentoo 给我的教训是，大量零散的编译调优时间累积在一起会消耗很多宝贵的青春和电费，它们带来的收益微乎其微，不如直接买更好的硬件。选一个有成熟包管理机制，社区活跃的发行版能节省大把精力把真正要做的事做好。这也是后来我只用 Debian 的一个主要原因。&lt;/p>
+&lt;h4 id="桌面美化wm">桌面美化，WM&lt;/h4>
+&lt;p>曾经每天看 DistroWatch.com，除了了解各种发行版的动向，还希望看到一个界面更加美观的发行版，因为感觉大部分发行版的开发者审美太非主流。我用了很长时间尚且还看得过去的 XFCE 和 FVWM-Crystal，也用过臃肿浮夸的 KDE 和 Gnome。试了不少布局和配置，下载过很多 GTK 皮肤和图标库，玩过酷炫的 Compiz，调教过中文字体的显示效果。但不管怎么改都感觉哪儿不完美，直到后来接触到同事 Apple iBook G4 上的 Mac 系统，便掉进了在 Linux 上模仿 Mac 系统界面的深渊。&lt;a class="link" href="https://www.flickr.com/photos/lexrus/albums/72157600004346396/with/159775016/" target="_blank" rel="noopener"
+>这个 Flickr 相册&lt;/a> 里有不少那些年的痕迹。&lt;/p>
+&lt;p>这同样是一件没有什么收益的事情，2006 年后我放弃治疗，改用 Mac 系统。&lt;/p>
+&lt;h4 id="wine">wine&lt;/h4>
+&lt;p>周围的人问我为什么不用 Windows 这种主流的操作系统，倒喜欢用小众的操作系统的时候，我都只是一笑而过，后来我用 Mac 的时候也常常遇到这样的问题。有意思的是，现在这个问题在大部分互联网公司里变成了：『为什么你不用 Mac？』&lt;/p>
+&lt;p>我一开始用 Linux 作为开发主力机的确发现有诸多不便。比如同事给我发个 Microsoft Office 生成的文件；比如做网页要在 Internet Explorer 里调试；比如要上 QQ。不过我并没有感觉到 Linux 不主流，有很多在线论坛有大量热心的 Linux 用户能帮你解决各种技术问题。而同一时期那些 Windows 相关的社区全在共享盗版软件。&lt;/p>
+&lt;p>在还没有虚拟机技术的时候，很长一段时间里我是用 GRUB 启动多系统的。后来渐渐地用 wine 这个工具跑起了大部分 Windows 下的程序，接着完全干掉 Windows，再后来因为要流畅地跑魔兽世界内测不得不装回 Windows。&lt;/p>
+&lt;h4 id="生产工具海选">生产工具海选&lt;/h4>
+&lt;p>对于开发人员来说，一个非常费神的事情是开发工具，尤其是文本编辑器。我用遍了市面上几乎所有收费或免费的编辑器，都没有找到一款像 Windows 下的 EditPlus 那样好用的产品。主流的推荐是 Vim 和 Emacs，我试着去学好 Vim，但当时并没有多少好用的插件，加上自己不熟悉各种快捷键，文本编辑效率并不高。幸好后来改用 Mac，很长一段时间被 TextMate 拯救了。&lt;/p>
+&lt;p>在我的 title 还是前端开发工程师和 Flash 开发工程师的日子里，在 Linux 下绘图也不是一件轻松的差事，我一直用不惯 GIMP 和 InkScape。有试着用 wine 跑过 Flash 的 IDE 和 Macromedia Fireworks。为了能在 Linux 下愉快地开发 Flash 程序，我还把整个项目改用 MTASC 编译。我很后悔没有早点明白，在 Linux 下绘图这件事就是自讨苦吃，同一时期在 Windows 下的各种绘图体验会愉快很多。&lt;/p>
+&lt;h4 id="运维">运维&lt;/h4>
+&lt;p>因为会使用 Linux，所以在开发过程中时不时地会承担一些简单的运维任务。为什么只是简单的，因为更复杂的任务会由那些有 RedHat 证书的专业运维负责。在我这些年的工作经历中，我曾跑过十多次机房，管理过一些 1U 服务器，但都只停留在装系统和配置服务环境的阶段，并没有机会接触那些需要大量服务器携同工作的任务。而这些安装和配置的任务，在 Debian 下又过份地简单，apt-get install 装好的东西一般不用再多折腾就能很好地使用。所以我没能在运维这一块更加深入，只是变成一个初级熟练工而已。&lt;/p>
+&lt;p>前几年因为虚拟币的泡沫，我开始有动力自学配置管理工具，学了一点点 Chef 和 Puppet，感觉略复杂个人用不上，所以学了相对简单好用且不需要 master 服务器的 Ansible。有一段时间我控制近 50 台虚拟机挖虚拟币，最高的一个月有 6000 元的收入。&lt;/p>
+&lt;p>随后我试着把一些日常开发中经常需要反复做的事写成 Ansible Playbook，于是便有了 &lt;a class="link" href="https://github.com/lexrus/ios-dev-playbook" target="_blank" rel="noopener"
+>ios-dev-playbook&lt;/a>。期间为了和墙做斗争，从 &lt;a class="link" href="https://github.com/ftao/vpn-deploy-playbook" target="_blank" rel="noopener"
+>vpn-deploy-playbook&lt;/a> 这个仓库中也学到不少实用技能。但是，很多线上服务其实比某些开源的程序做得好，有时候自己运维往往省不下几个钱。举个例子，Git 仓库，我曾经很喜欢自己在 Linode 虚拟器上搭建 GitLab 或者 Gogs，但是后来发现 GitHub 无论是在社区工具链集成度以及易用性上都甩开其它竞品好几条街。&lt;/p>
+&lt;p>另外，这几年，为了满足各种创业公司对高生产效率和低成本的需求，IaaS、PaaS、SaaS 以及 Docker 开始流行，创业公司不再需要专职的运维，开发人员写几个配置文件，在网页里点几下鼠标就能把一个完整的系统弄上线。&lt;/p>
+&lt;p>所以，我掌握的这些简单的 Linux 运维的技能，几乎已经被淘汰完了。&lt;/p>
+&lt;p>我试着去学 Goolge Kubernetes 和 AWS Lambda，但感觉业余精力不够，也没有项目可以实践。&lt;/p>
+&lt;h4 id="总结">总结&lt;/h4>
+&lt;p>如果我晚十年出生，或者早点用上 Mac OS，或者考了一张 RedHat 证书，应该就不会这么折腾了。&lt;/p></description></item><item><title>Android 开发从入门到放弃</title><link>https://lex.sh/p/android-let-it-go/</link><pubDate>Fri, 15 Apr 2016 22:52:44 +0800</pubDate><guid>https://lex.sh/p/android-let-it-go/</guid><description>&lt;p>谁都不是生来就是 Android 黑啊，我也不例外。&lt;/p>
+&lt;p>我曾抱着成为移动端全能的梦想，决心补上 Android 开发这块短板，收集了不少 Android 开发的资源，花了几十分钟下载 SDK，信心满满地编译 Hello World。然后，对着屏幕看了十分钟不止才看到结果。Google 的文档可不会告诉你直接插 USB 真机测试会快很多啊，也没有说推荐用友商的 &lt;a class="link" href="https://www.genymotion.com" target="_blank" rel="noopener"
+>GenyMotion&lt;/a>，当时我的心是凉的。&lt;/p>
+&lt;p>后来为了有愉快的开发体验，搞了台当时算速度不错的 SONY Xperia Z1 防水手机，一心想做个适合在水里用的 Android App。一个人脑暴了很久，想了很多不靠谱的 idea，终因忙 iOS 项目，没有一个做出来。&lt;/p>
+&lt;p>不过在使用 SONY Xperia Z1 的过程中，我发现有些我在 Motorola XT301 上遇到过的问题在这几年里并没有改善。&lt;/p>
+&lt;p>比如说，市场混乱。你会发现几乎每个手机厂家都喜欢出自己的 App 市场，并且自带的 ROM 不带 Google Play。甚至于某些和运营商合作的手机，会自带两个市场。再加上一些被公认做得还不错的既不是手机厂也不是运营商的市场，XXX 手机卫士，一台 Android 手机带数个市场算是很正常的事。这些市场并没有哪个处于绝对的垄断地位。虽说竞争是好事，但这种鱼龙混杂的场面，让用户在选择时有些许迷茫。同时，开发人员发布 apk 也是件很累的事。所以有人做了 &lt;a class="link" href="https://github.com/mcxiaoke/gradle-packer-plugin" target="_blank" rel="noopener"
+>Android 多渠道打包工具&lt;/a>，还有些提供代发布的服务如 &lt;a class="link" href="http://www.coolchuan.com" target="_blank" rel="noopener"
+>酷传&lt;/a> 等。而这些市场中，有很多一看就是垃圾的应用，居然通过了市场的审核发布了。我曾经搜索「招商银行」找到五个长得差不多的 Android App，看到过大量审美超出普通人接受范围的 Android App，下载到不少安装时问你要几乎所有权限的 Android App。&lt;/p>
+&lt;p>二是，界面设计、交互体验没有统一的范式，大部分 App，需要有个「用熟」的过程。各家都在培养自家 App 的用户习惯，但好在他们之间会时不时地互相取长一下，某些交互趋同，某些则向 iOS 看齐。即便后来有了 &lt;a class="link" href="https://www.google.com/design/spec/material-design/introduction.html" target="_blank" rel="noopener"
+>Material Design&lt;/a>，市场中界面美观、交互优雅附合新用户预期的 App 依旧还是少数。另外，可笑的是，系统皮肤的排行里，仿 iOS 的皮肤总能在前十中占上三四个位置。&lt;/p>
+&lt;p>再说硬件，除非你用亲儿子，或者一些比较开放的友商的手机，不然你想刷官方 ROM 是一件很难的事。这看起来并不是什么坏事，直到 Android 6.0 出来几个月后，我的手机还只能用 4.2 时，我就没那么开心了。{{ 这里删除一百字指定品牌和型号的吐槽以防以后有人想送我对应的手机 }}&lt;/p>
+&lt;p>去年我在新味做 iOS 开发的时候遇到一个需求，负责发货的客服需要实时跟踪快递员的位置，快递员需要上报送货状态。我们统计了一下差不多十二个快递员中只有一个人用 iPhone，我只好把我半调子的 Android 开发技能捡起来。用 gradle 做包管理，ButterKnife 连接各种资源，RxAndroid 简化交互逻辑，Retrofit + gson 实现网络层，启了一个百度定位的 service，在桌面上放了一个 widget 用来快速开关这个 service 并切换送货状态。我试着用各种已知的最佳实践来搞定每一个简单的任务，但相比之下，除了界面布局之外，iOS 开发尤其是使用 Swift 开发时的各种体验更加优雅并高效。写完这个 Android App 后，我更加确定我喜欢 Swift 而不是 Java，喜欢 YAML 而不是 XML，喜欢 Xcode 而不是 Android Studio。&lt;/p>
+&lt;p>如果我成为一个 iOS + Android 开发和设计的全能，我有一个月时间做一个 App 的 Android 版和 iOS 版，我可能可以把它俩都磨到 60 分及格。但另一个我如果全心全意地只学 iOS 也只磨 iOS，他应该会比前一个我更快地把 iOS App 磨到 90 分以上。基于这个假设，再加上前面提到的不爽、不喜欢和不合理，我果断地删掉了 Android Studio，unfollow 了所有之前关注过的 Android 牛人和知名 Android 开源项目，并用成为 Android 黑这种极端的方式来防止自己重新捡起 Android 开发。&lt;/p></description></item><item><title>两周 React Native 开发小结</title><link>https://lex.sh/p/2weeks-react-native/</link><pubDate>Tue, 12 Apr 2016 22:24:33 +0800</pubDate><guid>https://lex.sh/p/2weeks-react-native/</guid><description>&lt;p>将原有的 Swift 代码改成 React Native 是个不小的动作，我们选择了一些对主要功能影响不大的页面定点重构，主要考虑到 React Native 的几个优点：&lt;/p>
+&lt;ol>
+&lt;li>跳过 App Store 审核，远程更新代码，提高迭代频率和效率；&lt;/li>
+&lt;li>减少编译时间，开发效率更高；&lt;/li>
+&lt;li>组件化开发，更高的复用率；&lt;/li>
+&lt;li>相对其它 Hybrid 方案，React Native 性能更好，用户体验更接近原生。&lt;/li>
+&lt;/ol>
+&lt;p>经过我一个人两周的折腾，发现这些优势并不能在我们的 App 里最大化。最后我把所有 React Native 写的代码全部删除，花了两天时间用 Swift 重写了一遍。&lt;/p>
+&lt;p>下面，我来聊聊为什么我们的 App 没能享受这些优势。&lt;/p>
+&lt;h3 id="迭代频率和效率">迭代频率和效率&lt;/h3>
+&lt;p>为了更好地发布版本，我使用了 &lt;a class="link" href="https://github.com/aerofs/react-native-auto-updater" target="_blank" rel="noopener"
+>react-native-auto-updater&lt;/a>，这是一个比较成熟的更新方案。我把 jsbundle 放在 AWS S3 上，每次发布更新 metadata.json。用户启动 App 时检查是否有适合当前 App 版本的新 jsbundle，如果有，则偷偷地更新，并在下一次启动时使用新版。我们用的这个算是比较保守的更新策略，缺点是用户不能第一时间用上新版，好处是不会因为在使用中更新而产生副作用。&lt;/p>
+&lt;p>虽然不再经过 App Store 慢长的审核（平均一周），但是新的版本也要测试吧，也要有个发布的周期吧，在只有我一个人写 jsx 的情况下，发布周期控制在几天内合适呢？我能很快地更新一个页面，修正某个逻辑错误，但是，首先，我们用 &lt;a class="link" href="https://github.com/bang590/JSPatch" target="_blank" rel="noopener"
+>JSPatch&lt;/a> | &lt;a class="link" href="https://github.com/probablycorey/wax" target="_blank" rel="noopener"
+>WAX&lt;/a> | &lt;a class="link" href="https://rollout.io" target="_blank" rel="noopener"
+>Rollout&lt;/a> 等方案也能（但相对略费力地）达到这个目的；其次，我们做的不是电商，并没有这样频繁的更新需求。&lt;/p>
+&lt;h3 id="减少编译时间开发效率更高">减少编译时间，开发效率更高&lt;/h3>
+&lt;p>几乎可以略过不计的编译时间的确能诱惑大部分被 Swift 慢长的编译时间摧残过的灵魂。Live Reload 功能让你在每次保存后都能立刻看到更新后的页面。0.23.0 新增的 Hot Reload 功能可以在不刷新页面的情况下看到更新后的结果。但其实编译在整个开发过程中只占很小的比例，尤其是对于小 App 来说。更何况，现在可以用 &lt;a class="link" href="https://github.com/johnno1962/injectionforxcode" target="_blank" rel="noopener"
+>InjectionForXcode&lt;/a> 在运行时注入更新的代码，可以用 &lt;a class="link" href="https://github.com/s4cha/Stevia" target="_blank" rel="noopener"
+>Stevia&lt;/a> 实现 Hot Reload 布局。再者，有 FLEX 和 Reveal 等调试工具可以辅助开发，新版本 Xcode 编译 Swift 也越来越快（不是幻觉吧），Swift 写的 Playground 开始支持用户交互，所以我并不觉得 React Native 在这一项上占有绝对优势。&lt;/p>
+&lt;p>不过，倒是有几个影响 React Native 开发效率的点。比如 Nuclide 比较卡，代码提示也非常有限，我试过换 Sublime Text 和 WebStorm，没法像 Xcode 7.3 那样无脑地补全。当然还有震惊全球的 left-pad 事件也正好发生在我折腾 React Native 的这两周里。&lt;/p>
+&lt;p>还有，由于大部组件，包括 Navigator 实现的导航，都无法通过 UIAppearance 实现统一定制，社区中的组件也没有统一的风格，所以为了让整个 App 看起来有统一的风格，我不得不花费大量的时间在写 jsx 的样式中。而且因为 jsx 中的样式和 CSS 还不一样，和 JSON 比较像，不太容易在组件之间复用，我干了不少体力活。&lt;/p>
+&lt;h3 id="组件化开发高复用率">组件化开发，高复用率&lt;/h3>
+&lt;p>我发现大部分原生 App 开发人员不喜欢写 Hybrid App，对 React Native 这种方案也是持观望态度。在 React Native 社区混迹的这两周里（其实去年断断续续玩过一阵子，但是因为当时 Nuclide 卡成翔&amp;hellip;），我发现大部分活跃的开发人员是 web 前端开发人员，其中大部分人没有自制 iOS 组件的能力，以至于整个社区没有像原生社区那样频繁出现一些高质量的、持续更新的原生组件。&lt;/p>
+&lt;p>并且，最要命的时，像我们这种创业小公司，招 iOS 开发已经很不容易，更不要说招一个会 React Native 的 iOS 开发了（这句好像是在夸自己?）。&lt;/p>
+&lt;p>在找不到好用的组件的情况下，或者说大部分组件拿来后都要大修大改的情况下，实现 App 的效率其实非常低，这效率取决于你有多少好用的组件，而这一点在目前 native 社区里的几乎不是问题。React Native 的社区有点像早期的 Objective-C 社区，大家都在忙着做一些基础的控件，很多东西都没有打磨好，你很容易被动地陷入为社区贡献青春的伟大理想中，但是产品汪和设计狮都期待着你能做出 Dribbble 上的某个动效。&lt;/p>
+&lt;h3 id="性能更好用户体验接近原生">性能更好，用户体验接近原生&lt;/h3>
+&lt;p>是的，在一些简单的由 View 拼装的界面中，我很难感觉到各种交互有任何延时。不过，由于我只用 React Native 替换了 App 中某些部分，根据官方 repo 中的建议，需要在 React Native 页面还没被展示的时候，预先加载 RCTBridge 和 RCTRootView。这样做的后果是，在没有复杂页面的情况下，App 中 Swift 代码占的内存和 RCTRootView 起来后占的内存加起来有 120MB。不这样做的话，第一次展示 RCTRootView 时能明显地感觉到白屏。&lt;/p>
+&lt;p>上面扯到的这些可能暴露了我对 React Native 片面的认知，如果讲错了还希望你能指正。&lt;/p>
+&lt;p>现在我个人对它的态度是继续观望并且建议 Swift 开发者持续专心地写 Swift。&lt;/p></description></item></channel></rss>

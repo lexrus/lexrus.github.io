@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on Lex.sh</title><link>https://lex.sh/page/</link><description>Recent content in Pages on Lex.sh</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 30 May 2021 09:29:12 +0800</lastBuildDate><atom:link href="https://lex.sh/page/index.xml" rel="self" type="application/rss+xml"/><item><title>SwiftyMenu</title><link>https://lex.sh/swiftymenu/</link><pubDate>Sun, 30 May 2021 09:29:12 +0800</pubDate><guid>https://lex.sh/swiftymenu/</guid><description>Mac 系统中有很多优秀的开发工具，同样做一件事可以选择不同的工具。 比如，几乎所有工具都能编写 Markdown，要写技术文档的时候我会用 Typora，想要更快速地打开 Markdown 文件只改几个字我会用 Sublime Text。而 Finder 中自带的选择方式是右键点 Open With：
+Open With
+但有时候这样做并不方便，很多工具还支持编辑目录，目录的右键菜单中没有这个选项。
+SwiftyMenu 就是一款用来简化这个选择过程的工具。它是我用 Swift 编写的 Finder 插件，你可以用它在 Finder 工具栏中增加常用的工具，这样在你选中文件或目录时能更快地选择合适的工具。它提供了一个和 Finder 菜单体验一致的按钮，这一点非常重要，因为我没能找到一种能融入系统，并且不显得突兀的工具。所以我开始做这个插件的第一件事，就是在 Sketch 里画出了按钮的样子：
+Finder Preview
+通过 SwiftyMenu 主 app，你可以设置菜单中要出现哪些应用，并能拖动排序：
+Applications
+这样，Finder 中就会有这样的菜单：
+Finder Context Menu
+从此，打开程序变得变得非常方便 😎。
+SwiftyMenu 现已上架 Mac App Store： https://apps.apple.com/app/swiftymenu/id1567748223</description></item><item><title>关于我</title><link>https://lex.sh/about/</link><pubDate>Sat, 29 May 2021 23:56:05 +0800</pubDate><guid>https://lex.sh/about/</guid><description>😄 你好~ 我是 Lex 汤，常用 id: lexrus，生活在上海，80 后全干工程师。
+业余爱好 Netflix / Apple TV+ 追剧 听 Podcast 写 Swift 喜欢的游戏 Clash Royale Diablo Ⅲ CupHead 魔兽世界 原神 工作经历 1997 年开始自学编程，技术、设计、产品相关的事都有做过，包括但不限于：
+读书时在蓝色理想 JS 区当版主 上海图书馆实习录入员，五笔输入繁体近代文章约每分钟 65 个汉字 小创业公司写 PHP、ColdFusion 在土豆网开发最早的 Flash 视频播放器和播放页 在携程写机票加酒店业务和组内效率工具 在现代传播写 iWeekly 图历、乐活杂志、新视线等 iOS app 在平安壹钱包做开发运维、iOS 交互设计和开发 在 nonda.co 写智能硬件的 iOS app，两次去美国参加 CES 加密币交易所远程工作，React 打下手，iOS 及 Android 开发 👯 目前在 米哈游 写 Swift，可内推各种岗位，微信扫码自助投递简历内推： 米哈游内推</description></item></channel></rss>
