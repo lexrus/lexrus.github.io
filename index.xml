@@ -128,6 +128,6 @@
 &lt;p>并且，最要命的时，像我们这种创业小公司，招 iOS 开发已经很不容易，更不要说招一个会 React Native 的 iOS 开发了（这句好像是在夸自己?）。&lt;/p>
 &lt;p>在找不到好用的组件的情况下，或者说大部分组件拿来后都要大修大改的情况下，实现 App 的效率其实非常低，这效率取决于你有多少好用的组件，而这一点在目前 native 社区里的几乎不是问题。React Native 的社区有点像早期的 Objective-C 社区，大家都在忙着做一些基础的控件，很多东西都没有打磨好，你很容易被动地陷入为社区贡献青春的伟大理想中，但是产品汪和设计狮都期待着你能做出 Dribbble 上的某个动效。&lt;/p>
 &lt;h3 id="性能更好用户体验接近原生">性能更好，用户体验接近原生&lt;/h3>
-&lt;p>是的，在一些简单的由 View 拼装的界面中，我很难感觉到各种交互有任何延时。不过，由于我只用 React Native 替换了 App 中某些部分，根据官方 repo 中的建议，需要在 React Native 页面还没被展示的时候，预先加载 RCTBridge 和 RCTRootView。这样做的后果是，在没有复杂页面的情况下，App 中 Swift 代码占的内存和 RCTRootView 起来后占的内存加起来有 120MB。不这样做的话，第一次展示 RCTRootView 时能明显地感觉到白屏。&lt;/p>
+&lt;p>在一些简单的由 View 拼装的界面中，我很难感觉到各种交互有任何延时。不过，由于我只用 React Native 替换了 App 中某些部分，根据官方 repo 中的建议，需要在 React Native 页面还没被展示的时候，预先加载 RCTBridge 和 RCTRootView。这样做的后果是，在没有复杂页面的情况下，App 中 Swift 代码占的内存和 RCTRootView 起来后占的内存加起来有 120MB。不这样做的话，第一次展示 RCTRootView 时能明显地感觉到白屏。&lt;/p>
 &lt;p>上面扯到的这些可能暴露了我对 React Native 片面的认知，如果讲错了还希望你能指正。&lt;/p>
 &lt;p>现在我个人对它的态度是继续观望并且建议 Swift 开发者持续专心地写 Swift。&lt;/p></description></item></channel></rss>
