@@ -19,11 +19,12 @@ SwiftyMenu 就是一款用来简化这个选择过程的工具。它是我用 Sw
 
 ![Applications](applications.png)
 
-这样，Finder 中就会有这样的菜单：
+这样，点击 Finder 工具栏的 SwiftyMenu 按钮，就能弹出这样的菜单：
 
 ![Finder Context Menu](findermenu.png)
 
-从此，打开程序变得变得非常方便 😎。
+点击菜单中的应用就能用它打开当前选中的文件或目录。
 
 SwiftyMenu 现已上架 Mac App Store：
+
 https://apps.apple.com/app/swiftymenu/id1567748223
