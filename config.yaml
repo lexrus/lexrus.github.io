@@ -5,7 +5,7 @@ paginate: 6
 title: Lex.sh
 
 # Change it to your Disqus shortname before using
-disqusShortname: lex-sh
+disqusShortname: lexsh
 
 # GA Tracking ID
 googleAnalytics: UA-30327263-4
