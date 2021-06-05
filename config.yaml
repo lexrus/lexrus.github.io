@@ -36,7 +36,7 @@ params:
     sidebar:
         # emoji: 🍥
         subtitle: "我是 Lex，常用网络 id: lexrus，中年 Swift 程序员一枚。
-  欢迎访问我的个人网站，无责任不定期更新（间隔单位可以是年），欢迎订阅。"
+  此站点无责任不定期更新（间隔单位可以是年），欢迎订阅。"
         avatar:
             local: false
             src: /images/avatar.png
@@ -103,9 +103,9 @@ params:
 
     imageProcessing:
         cover:
-            enabled: true
+            enabled: false
         content:
-            enabled: true
+            enabled: false
 
 ### Custom menu
 ### See https://docs.stack.jimmycai.com/configuration/custom-menu
