@@ -1,4 +1,168 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lex.sh</title><link>https://lex.sh/</link><description>Recent content on Lex.sh</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 30 May 2021 09:31:07 +0800</lastBuildDate><atom:link href="https://lex.sh/index.xml" rel="self" type="application/rss+xml"/><item><title>Serverless 简介</title><link>https://lex.sh/p/serverless-briefing/</link><pubDate>Sun, 20 Nov 2016 19:12:44 +0800</pubDate><guid>https://lex.sh/p/serverless-briefing/</guid><description>&lt;p>随着 PaaS、BaaS、SaaS 的流行，服务端开发和维护的工作变得更加便捷，大部分创业公司不再需要专职的运维，服务端开发人员即能搞定日常的服务器维护工作。而近几年，像 Parse、Firebase、CloudKit 这类连服务端开发人员都能省掉的方案更是受到不少创业公司的青睐。做一个 App 不再需要一堆人，试错的成本大大降低。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lex.sh</title><link>https://lex.sh/</link><description>Recent content on Lex.sh</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 04 Jun 2021 22:55:28 +0800</lastBuildDate><atom:link href="https://lex.sh/index.xml" rel="self" type="application/rss+xml"/><item><title>从 SwiftyMenu 的第一个用户反馈开始聊</title><link>https://lex.sh/p/swiftymenu-alacritty/</link><pubDate>Fri, 04 Jun 2021 22:55:28 +0800</pubDate><guid>https://lex.sh/p/swiftymenu-alacritty/</guid><description>&lt;img src="https://lex.sh/p/swiftymenu-alacritty/hero.jpg" alt="Featured image of post 从 SwiftyMenu 的第一个用户反馈开始聊" />&lt;p>SwiftyMenu 上线后的第一个用户反馈，说 SwiftyMenu 无法唤起 Alacritty。&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/alacritty/alacritty" target="_blank" rel="noopener"
+>Alacritty&lt;/a> 是一个开源的，用 Rust 编写的，OpenGL 渲染界面的跨平台终端。我下载了它的 Mac 版本，的确不能在 SwiftyMenu 中正常打开目录。让我们来聊一下，为什么不能打开，有什么解决办法。&lt;/p>
+&lt;h2 id="类型关联">类型关联&lt;/h2>
+&lt;p>通常，大部分 Mac 系统下原生的编辑工具、终端都支持打开文件或目录，要实现这一点，在程序的 Info.plist 中有这样一段：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="nt">&amp;lt;key&amp;gt;&lt;/span>CFBundleDocumentTypes&lt;span class="nt">&amp;lt;/key&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;array&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;dict&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;key&amp;gt;&lt;/span>CFBundleTypeName&lt;span class="nt">&amp;lt;/key&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;string&amp;gt;&lt;/span>Any Item&lt;span class="nt">&amp;lt;/string&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;key&amp;gt;&lt;/span>CFBundleTypeRole&lt;span class="nt">&amp;lt;/key&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;string&amp;gt;&lt;/span>Editor&lt;span class="nt">&amp;lt;/string&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;key&amp;gt;&lt;/span>LSHandlerRank&lt;span class="nt">&amp;lt;/key&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;string&amp;gt;&lt;/span>Default&lt;span class="nt">&amp;lt;/string&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;key&amp;gt;&lt;/span>LSItemContentTypes&lt;span class="nt">&amp;lt;/key&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;array&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;string&amp;gt;&lt;/span>public.item&lt;span class="nt">&amp;lt;/string&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;/array&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;key&amp;gt;&lt;/span>NSDocumentClass&lt;span class="nt">&amp;lt;/key&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;string&amp;gt;&lt;/span>$(PRODUCT_MODULE_NAME).Document&lt;span class="nt">&amp;lt;/string&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;/dict&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;/array&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>它在 Xcode 中的设置：
+&lt;figure style="flex-grow: 277; flex-basis: 664px">
+&lt;a href="https://lex.sh/p/swiftymenu-alacritty/xcode_document_types.png" data-size="1352x488">&lt;img src="https://lex.sh/p/swiftymenu-alacritty/xcode_document_types.png"
+width="1352"
+height="488"
+loading="lazy"
+alt="Xcode Document Types">
+&lt;/a>
+&lt;figcaption>Xcode Document Types&lt;/figcaption>
+&lt;/figure>&lt;/p>
+&lt;p>这里的 &lt;code>public.item&lt;/code> 被称为 UTIs(Uniform Type Identifiers) —— 统一类型标识。在 &lt;a class="link" href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html" target="_blank" rel="noopener"
+>Uniform Type Identifier Concepts&lt;/a> 这份文档里能找到以下几种不同方式分类而产生的层级树，比如：&lt;/p>
+&lt;p>&lt;img src="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/art/physical_vs_functional.gif" alt="A physical Hierarchy" />&lt;/p>
+&lt;p>用 &lt;code>public.item&lt;/code> 相当于接受所有文件，如果改成 &lt;code>public.image&lt;/code>，那就只有图片能被接受。&lt;/p>
+&lt;p>应用一旦声明了 Document Types，它就可以：&lt;/p>
+&lt;h3 id="1-把目录或文件拖到应用的图标上">1. 把目录或文件拖到应用的图标上&lt;/h3>
+&lt;p>这可能是最直观的方式，比较符合大部分人的操作直觉。&lt;/p>
+&lt;h3 id="2-作为默认的文件类型关联">2. 作为默认的文件类型关联&lt;/h3>
+&lt;p>假设一个 app 在 Document Types 里注册作为 &lt;code>public.image&lt;/code> 的 Editor 或者 Viewer，当你在 Finder 中选中了一个图片文件，你就能在它的右键菜单的 Open with 中看到这个 app。如果这个 app 作为图片文件的首要打开方式，那么直接双击文件就能用这个 app 打开这个文件。&lt;/p>
+&lt;p>当然，仅仅关联文件是不够的，应用还得实现真正的打开功能才能打开文件和目录。&lt;/p>
+&lt;h2 id="applescript-或-javascript-调用">AppleScript 或 JavaScript 调用&lt;/h2>
+&lt;p>应用可以通过支持 AppleScript 对 Mac 生态更加友好，
+&lt;a class="link" href="https://www.raywenderlich.com/1033-making-a-mac-app-scriptable-tutorial" target="_blank" rel="noopener"
+>Making A Mac App Scriptable Tutorial&lt;/a> 这个教程中介绍了具体的实现细节。&lt;/p>
+&lt;p>在 Info.plist 中声明支持脚本操作：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="nt">&amp;lt;key&amp;gt;&lt;/span>NSAppleScriptEnabled&lt;span class="nt">&amp;lt;/key&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;true/&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>那么在 Script Editor 的 Library 里，就能看到 Standard Suite：&lt;/p>
+&lt;p>&lt;figure style="flex-grow: 173; flex-basis: 416px">
+&lt;a href="https://lex.sh/p/swiftymenu-alacritty/standard_suite.png" data-size="836x482">&lt;img src="https://lex.sh/p/swiftymenu-alacritty/standard_suite.png"
+width="836"
+height="482"
+loading="lazy"
+alt="Standard Suite">
+&lt;/a>
+&lt;figcaption>Standard Suite&lt;/figcaption>
+&lt;/figure>&lt;/p>
+&lt;p>比如这份 AppleScript 用 CotEditor 打开它自己的 Info.plist：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-applescript" data-lang="applescript">&lt;span class="k">tell&lt;/span> &lt;span class="nb">application&lt;/span> &lt;span class="s2">&amp;#34;CotEditor&amp;#34;&lt;/span>
+&lt;span class="nb">activate&lt;/span>
+&lt;span class="nb">open&lt;/span> &lt;span class="s2">&amp;#34;/Applications/CotEditor.app/Contents/Info.plist&amp;#34;&lt;/span>
+&lt;span class="k">end&lt;/span> &lt;span class="k">tell&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="参数传递">参数传递&lt;/h2>
+&lt;p>应用也可以不关联任何 UTIs，而是改用解析参数的方式，让用户能在 CLI 中打开指定文件或目录。&lt;/p>
+&lt;p>系统自带的 &lt;code>/usr/bin/open&lt;/code>，能根据打开的对象的选择合适的应用，和在 Finder 中双击差不多：&lt;/p>
+&lt;pre>&lt;code>open ~/Downloads
+&lt;/code>&lt;/pre>&lt;p>因为 ~/Downloads 目录的 UTI 是 &lt;code>public.directory&lt;/code>，它的首要关联 Viewer 是 Finder，所以会打开 Finder 并进入到 ~/Downloads 目录。&lt;/p>
+&lt;p>如果我们要用 iTerm 打开这个目录，就不能依靠 Document Types 了，而是要把目录作为参数传递：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">open -n /Applications/iTerm.app --args ~/Downloads
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>或者更加直接地执行应用的二进制可执行文件：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">/Applications/iTerm.app/Contents/MacOS/iTerm2 ~/Downloads
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="问题原因">问题原因&lt;/h2>
+&lt;p>现在回到我们的问题，SwiftyMenu 打开文件或目录，使用的是：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-swift" data-lang="swift">&lt;span class="kd">let&lt;/span> &lt;span class="nv">openConfig&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">NSWorkspace&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">OpenConfiguration&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">openConfig&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">createsNewApplicationInstance&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">false&lt;/span>
+&lt;span class="k">do&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">try&lt;/span> &lt;span class="n">NSWorkspace&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">shared&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">open&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="n">urls&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 被打开的文件或目录的数组&lt;/span>
+&lt;span class="n">withApplicationAt&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">applicationURL&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// 应用程序的本地地址&lt;/span>
+&lt;span class="n">options&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[],&lt;/span>
+&lt;span class="n">configuration&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[:]&lt;/span>
+&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">os_log&lt;/span>&lt;span class="p">(.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;%@&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">error&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">localizedDescription&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>相当于执行了：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">open -a &lt;span class="s2">&amp;#34;/Applications/Sublime Text.app&amp;#34;&lt;/span> ~/Downloads
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>而 Alacritty 没有声明支持任何 UTIs，不会和目录与普通文件建立关联，它也没有打开文件或目录的功能。所以如果执行：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">open -a &lt;span class="s2">&amp;#34;/Applications/Alacritty.app&amp;#34;&lt;/span> ~/Downloads
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>会看到这个错误：
+&lt;figure style="flex-grow: 107; flex-basis: 258px">
+&lt;a href="https://lex.sh/p/swiftymenu-alacritty/alacritty_error.png" data-size="744x692">&lt;img src="https://lex.sh/p/swiftymenu-alacritty/alacritty_error.png"
+width="744"
+height="692"
+loading="lazy"
+>
+&lt;/a>
+&lt;/figure>&lt;/p>
+&lt;p>但是如果调用它的可执行文件，可以看到：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">/Applications/Alacritty.app/Contents/MacOS/alacritty --help
+alacritty 0.8.0 &lt;span class="o">(&lt;/span>a1b13e6&lt;span class="o">)&lt;/span>
+Christian Duerr &amp;lt;contact@christianduerr.com&amp;gt;
+Joe Wilm &amp;lt;joe@jwilm.com&amp;gt;
+A fast, cross-platform, OpenGL terminal emulator
+USAGE:
+alacritty &lt;span class="o">[&lt;/span>FLAGS&lt;span class="o">]&lt;/span> &lt;span class="o">[&lt;/span>OPTIONS&lt;span class="o">]&lt;/span>
+FLAGS:
+-h, --help Prints &lt;span class="nb">help&lt;/span> information
+--hold Remain open after child process exits
+--print-events Print all events to stdout
+-q Reduces the level of verbosity &lt;span class="o">(&lt;/span>the min level is -qq&lt;span class="o">)&lt;/span>
+--ref-test Generates ref &lt;span class="nb">test&lt;/span>
+-v Increases the level of verbosity &lt;span class="o">(&lt;/span>the max level is -vvv&lt;span class="o">)&lt;/span>
+-V, --version Prints version information
+OPTIONS:
+--class &amp;lt;instance&amp;gt; &lt;span class="p">|&lt;/span> &amp;lt;instance&amp;gt;,&amp;lt;general&amp;gt; Defines window class/app_id on X11/Wayland &lt;span class="o">[&lt;/span>default: Alacritty&lt;span class="o">]&lt;/span>
+-e, --command &amp;lt;command&amp;gt;... Command and args to execute &lt;span class="o">(&lt;/span>must be last argument&lt;span class="o">)&lt;/span>
+--config-file &amp;lt;config-file&amp;gt;
+Specify alternative configuration file &lt;span class="o">[&lt;/span>default: &lt;span class="nv">$HOME&lt;/span>/.config/alacritty/alacritty.yml&lt;span class="o">]&lt;/span>
+--embed &amp;lt;embed&amp;gt;
+Defines the X11 window ID &lt;span class="o">(&lt;/span>as a decimal integer&lt;span class="o">)&lt;/span> to embed Alacritty within
+-o, --option &amp;lt;option&amp;gt;... Override configuration file options &lt;span class="o">[&lt;/span>example: cursor.style&lt;span class="o">=&lt;/span>Beam&lt;span class="o">]&lt;/span>
+-t, --title &amp;lt;title&amp;gt; Defines the window title &lt;span class="o">[&lt;/span>default: Alacritty&lt;span class="o">]&lt;/span>
+--working-directory &amp;lt;working-directory&amp;gt; Start the shell in the specified working directory
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>那么打开目录其实可以执行：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">/Applications/Alacritty.app/Contents/MacOS/alacritty &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span>--working-directory ~/Downloads
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>但是由于执行脚本的功能一直没能通过审核，SwiftyMenu 无法直接运行脚本。&lt;/p>
+&lt;h2 id="automator">Automator&lt;/h2>
+&lt;p>Automator 可以把执行脚本包装成一个简单的应用，把这样的应用拖进 SwiftyMenu 中也能变向实现执行脚本的功能。&lt;/p>
+&lt;p>Automator 新建 Application，搜索 run 并添加 Run Shell Script:
+&lt;figure style="flex-grow: 150; flex-basis: 361px">
+&lt;a href="https://lex.sh/p/swiftymenu-alacritty/automator_run.png" data-size="822x546">&lt;img src="https://lex.sh/p/swiftymenu-alacritty/automator_run.png"
+width="822"
+height="546"
+loading="lazy"
+alt="Run Shell Script">
+&lt;/a>
+&lt;figcaption>Run Shell Script&lt;/figcaption>
+&lt;/figure>&lt;/p>
+&lt;p>添加如下脚本：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nv">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="nb">test&lt;/span> -f &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$1&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="k">$(&lt;/span>dirname &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$1&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="nv">$1&lt;/span>&lt;span class="sb">`&lt;/span>
+/Applications/Alacritty.app/Contents/MacOS/alacritty &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span>--working-directory &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$dir&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;figure style="flex-grow: 272; flex-basis: 654px">
+&lt;a href="https://lex.sh/p/swiftymenu-alacritty/run_script.png" data-size="1686x618">&lt;img src="https://lex.sh/p/swiftymenu-alacritty/run_script.png"
+width="1686"
+height="618"
+loading="lazy"
+>
+&lt;/a>
+&lt;/figure>&lt;/p>
+&lt;p>导出成应用程序并拖入 SwiftyMenu，就能打开 Alacritty 了。为了看起来更像 Alacritty，你还可以把 Alacritty 的图标设置为这个 Automator 应用的图标。&lt;/p>
+&lt;p>&lt;figure style="flex-grow: 141; flex-basis: 339px">
+&lt;a href="https://lex.sh/p/swiftymenu-alacritty/fake_alacritty.png" data-size="1190x842">&lt;img src="https://lex.sh/p/swiftymenu-alacritty/fake_alacritty.png"
+width="1190"
+height="842"
+loading="lazy"
+alt="Fake Alacritty">
+&lt;/a>
+&lt;figcaption>Fake Alacritty&lt;/figcaption>
+&lt;/figure>&lt;/p>
+&lt;p>最后，期待 SwiftyMenu 的脚本执行功能早日通过审核😂。&lt;/p></description></item><item><title>Serverless 简介</title><link>https://lex.sh/p/serverless-briefing/</link><pubDate>Sun, 20 Nov 2016 19:12:44 +0800</pubDate><guid>https://lex.sh/p/serverless-briefing/</guid><description>&lt;p>随着 PaaS、BaaS、SaaS 的流行，服务端开发和维护的工作变得更加便捷，大部分创业公司不再需要专职的运维，服务端开发人员即能搞定日常的服务器维护工作。而近几年，像 Parse、Firebase、CloudKit 这类连服务端开发人员都能省掉的方案更是受到不少创业公司的青睐。做一个 App 不再需要一堆人，试错的成本大大降低。&lt;/p>
 &lt;p>而各种容器技术的不断进步，利用譬如 Docker 容器实现轻量级的服务器单元，一个新的服务端形态正在成形 —— Serverless，或称 FaaS (Functions as a Service)。下面从我个人的观感随便聊一下我理解的 Serverless。&lt;/p>
 &lt;p>Serverless 主要应用表现为，功能以 function 为最小的单元，用户访问某个 function 时启动一个容器执行 function 内的程序，执行结束回收这个容器，整个过程快至几个毫秒就能完成。在某些应用场景下，能很好的代替持续在线的服务。&lt;/p>
 &lt;p>目前最具代表性的 Serverless 解决方案当属亚马逊的 &lt;a class="link" href="https://aws.amazon.com/lambda/details/" target="_blank" rel="noopener"
