@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Automator on Lex.sh</title><link>https://lex.sh/tags/automator/</link><description>Recent content in Automator on Lex.sh</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 04 Jun 2021 22:55:28 +0800</lastBuildDate><atom:link href="https://lex.sh/tags/automator/index.xml" rel="self" type="application/rss+xml"/><item><title>从 SwiftyMenu 的第一个用户反馈开始聊</title><link>https://lex.sh/p/swiftymenu-alacritty/</link><pubDate>Fri, 04 Jun 2021 22:55:28 +0800</pubDate><guid>https://lex.sh/p/swiftymenu-alacritty/</guid><description>SwiftyMenu 上线后的第一个用户反馈，说 SwiftyMenu 无法唤起 Alacritty。
-Alacritty 是一个开源的，用 Rust 编写的，OpenGL 渲染界面的跨平台终端。我下载了它的 Mac 版本，的确不能在 SwiftyMenu 中正常打开目录。让我们来聊一下，为什么不能打开，有什么解决办法。
-类型关联 通常，大部分 Mac 系统下原生的编辑工具、终端都支持打开文件或目录，要实现这一点，在程序的 Info.plist 中有这样一段：
-&amp;lt;key&amp;gt;CFBundleDocumentTypes&amp;lt;/key&amp;gt; &amp;lt;array&amp;gt; &amp;lt;dict&amp;gt; &amp;lt;key&amp;gt;CFBundleTypeName&amp;lt;/key&amp;gt; &amp;lt;string&amp;gt;Any Item&amp;lt;/string&amp;gt; &amp;lt;key&amp;gt;CFBundleTypeRole&amp;lt;/key&amp;gt; &amp;lt;string&amp;gt;Editor&amp;lt;/string&amp;gt; &amp;lt;key&amp;gt;LSHandlerRank&amp;lt;/key&amp;gt; &amp;lt;string&amp;gt;Default&amp;lt;/string&amp;gt; &amp;lt;key&amp;gt;LSItemContentTypes&amp;lt;/key&amp;gt; &amp;lt;array&amp;gt; &amp;lt;string&amp;gt;public.item&amp;lt;/string&amp;gt; &amp;lt;/array&amp;gt; &amp;lt;key&amp;gt;NSDocumentClass&amp;lt;/key&amp;gt; &amp;lt;string&amp;gt;$(PRODUCT_MODULE_NAME).Document&amp;lt;/string&amp;gt; &amp;lt;/dict&amp;gt; &amp;lt;/array&amp;gt; 它在 Xcode 中的设置： Xcode Document Types
-这里的 public.item 被称为 UTIs(Uniform Type Identifiers) —— 统一类型标识。在 Uniform Type Identifier Concepts 这份文档里能找到以下几种不同方式分类而产生的层级树，比如：
-用 public.item 相当于接受所有文件，如果改成 public.image，那就只有图片能被接受。
-应用一旦声明了 Document Types，它就可以：
-1. 把目录或文件拖到应用的图标上 这可能是最直观的方式，比较符合大部分人的操作直觉。
-2. 作为默认的文件类型关联 假设一个 app 在 Document Types 里注册作为 public.</description></item></channel></rss>
+Alacritty 是一个开源的，用 Rust 编写的，OpenGL 渲染界面的跨平台终端。我下载了它的 Mac 版本，的确不能在 SwiftyMenu 中正常打开目录。我看了一会儿，SwiftyMenu 无法在没有脚本执行功能的情况下调用 Alacritty，但有一个 workaround 的办法。
+Automator Automator 可以把执行脚本包装成一个简单的应用，把这样的应用拖进 SwiftyMenu 中也能变向实现执行脚本的功能。
+Automator 新建 Application，搜索 run 并添加 Run Shell Script: Run Shell Script
+Pass input 选择 as arguments，这样文件和目录会做为参数传入，我们就能在下面的脚本中用 $1 取得。
+添加以下脚本：
+dir=`test -f &amp;#34;$1&amp;#34; &amp;amp;&amp;amp; echo $(dirname &amp;#34;$1&amp;#34;) || echo $1` /Applications/Alacritty.app/Contents/MacOS/alacritty \ --working-directory &amp;#34;$dir&amp;#34;
+导出成应用程序并添加到（拖入也可以） SwiftyMenu 的应用列表里。为了看起来更像 Alacritty，你还可以把 Alacritty 的图标设置为这个 Automator 应用的图标。
+Fake Alacritty</description></item></channel></rss>
