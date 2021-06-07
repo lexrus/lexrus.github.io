@@ -7,7 +7,41 @@ image: "hero.jpg"
 
 SwiftyMenu 上线后的第一个用户反馈，说 SwiftyMenu 无法唤起 Alacritty。
 
-[Alacritty](https://github.com/alacritty/alacritty) 是一个开源的，用 Rust 编写的，OpenGL 渲染界面的跨平台终端。我下载了它的 Mac 版本，的确不能在 SwiftyMenu 中正常打开目录。让我们来聊一下，为什么不能打开，有什么解决办法。
+[Alacritty](https://github.com/alacritty/alacritty) 是一个开源的，用 Rust 编写的，OpenGL 渲染界面的跨平台终端。我下载了它的 Mac 版本，的确不能在 SwiftyMenu 中正常打开目录。我看了一会儿，SwiftyMenu 无法在没有脚本执行功能的情况下调用 Alacritty，但有一个 workaround 的办法。
+
+## Automator
+
+Automator 可以把执行脚本包装成一个简单的应用，把这样的应用拖进 SwiftyMenu 中也能变向实现执行脚本的功能。
+
+Automator **新建 Application**，搜索 run 并添加 **Run Shell Script**:
+![Run Shell Script](automator_run.png)
+
+**Pass input** 选择 **as arguments**，这样文件和目录会做为参数传入，我们就能在下面的脚本中用 `$1` 取得。
+
+**添加以下脚本**：
+
+```bash
+dir=`test -f "$1" && echo $(dirname "$1") || echo $1`
+/Applications/Alacritty.app/Contents/MacOS/alacritty \
+--working-directory "$dir"
+```
+
+![](run_script.png)
+
+**导出成应用程序**并添加到（拖入也可以） SwiftyMenu 的应用列表里。为了看起来更像 Alacritty，你还可以把 Alacritty 的图标设置为这个 Automator 应用的图标。
+
+![Fake Alacritty](fake_alacritty.png)
+
+至此，SwiftyMenu 的菜单就可以唤起 Alacritty 了。
+
+同理，TypeScript 编写的 [Hyper](https://github.com/vercel/hyper) 不能在 SwiftyMenu 中使用也可以这个方法解决，它的脚本是：
+
+```bash
+dir=`test -f "$1" && echo $(dirname "$1") || echo $1`
+/Applications/Hyper.app/Contents/Resources/bin/hyper "$dir"
+```
+
+那么，让应用打开文件或目录到底是怎么一回事呢？有兴趣了解背后原因的用户请继续往下看。
 
 ## 类型关联
 
@@ -179,30 +213,7 @@ OPTIONS:
 --working-directory ~/Downloads
 ```
 
-但是由于执行脚本的功能一直没能通过审核，SwiftyMenu 无法直接运行脚本。
-
-## Automator
-
-Automator 可以把执行脚本包装成一个简单的应用，把这样的应用拖进 SwiftyMenu 中也能变向实现执行脚本的功能。
-
-Automator 新建 Application，搜索 run 并添加 Run Shell Script:
-![Run Shell Script](automator_run.png)
-
-添加如下脚本：
-
-```bash
-dir=`test -f "$1" && echo $(dirname "$1") || echo $1`
-/Applications/Alacritty.app/Contents/MacOS/alacritty \
---working-directory "$dir"
-```
-
-![](run_script.png)
-
-导出成应用程序并拖入 SwiftyMenu，就能打开 Alacritty 了。为了看起来更像 Alacritty，你还可以把 Alacritty 的图标设置为这个 Automator 应用的图标。
-
-![Fake Alacritty](fake_alacritty.png)
-
-最后，期待 SwiftyMenu 的脚本执行功能早日通过审核😂。
+但是由于执行脚本的功能一直没能通过审核，SwiftyMenu 无法直接运行脚本，期待这个功能早日通过审核😂。
 
 
 
