@@ -1,0 +1,57 @@
+baseURL: https://lex.sh/
+languageCode: en-us
+title: Lex.sh
+theme: ["PaperMod"]
+
+googleAnalytics: UA-30327263-4
+
+minify:
+  minifyOutput: true
+
+params:
+  env: production
+  description: ""
+  keywords: []
+  author: Lex
+  DateFormat: "Jan 2, 2006"
+  defaultTheme: auto
+  disableThemeToggle: false
+  ShowReadingTime: false
+  ShowShareButtons: false
+  ShowPostNavLinks: false
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hidemeta: false
+  hideSummary: false
+  showtoc: false
+  tocopen: false
+
+  profileMode:
+    enabled: true
+    title: "Hi, I'm\n\nLex Tang"
+    subtitle: "iOS/macOS developer, he/him/husband/dad"
+    buttons:
+      - name: Résumé
+        url: page/resume
+
+  socialIcons:
+    - name: GitHub
+      url: https://github.com/lexrus
+    - name: Mastodon
+      url: https://mastodon.social/@lexrus
+    - name: Twitter
+      url: https://x.com/lexrus
+    - name: Telegram
+      url: https://t.me/lexrus
+    - name: Instagram
+      url: https://www.instagram.com/lexrus
+    - name: LinkedIn
+      url: https://www.linkedin.com/in/lexrus
+    - name: Dribbble
+      url: https://dribbble.com/lexrus
