@@ -38,13 +38,11 @@ params:
     subtitle: "iOS/macOS developer, he/him/husband/dad"
     buttons:
       - name: Résumé
-        url: page/resume
+        url: resume
 
   socialIcons:
     - name: GitHub
       url: https://github.com/lexrus
-    - name: Mastodon
-      url: https://mastodon.social/@lexrus
     - name: Twitter
       url: https://x.com/lexrus
     - name: Telegram

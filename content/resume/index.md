@@ -2,10 +2,6 @@
 title: "Résumé"
 date: 2024-05-26T13:56:05+08:00
 slug: resume
-params:
-  - comments: false
-  - ShowReadingTime: false
-  - languageAltTitle: Chinese
 ---
 
 I am a dedicated iOS developer with a comprehensive background in web development, enriched by a deep understanding of design principles, specifications, and standards. I began my career in web development in 2002 and have since worked with leading internet companies, including [Tudou.com](https://tudou.com) and [Ctrip.com](https://ctrip.com).
