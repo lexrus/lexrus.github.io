@@ -41,15 +41,15 @@ params:
         url: resume
 
   socialIcons:
-    - name: GitHub
-      url: https://github.com/lexrus
     - name: Twitter
       url: https://x.com/lexrus
     - name: Telegram
       url: https://t.me/lexrus
+    - name: GitHub
+      url: https://github.com/lexrus
     - name: Instagram
       url: https://www.instagram.com/lexrus
+    - name: YouTube
+      url: https://youtube.com/lexrus
     - name: LinkedIn
       url: https://www.linkedin.com/in/lexrus
-    - name: Dribbble
-      url: https://dribbble.com/lexrus
