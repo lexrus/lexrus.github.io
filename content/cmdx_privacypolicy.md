@@ -1,18 +1,18 @@
 ---
-title: "BlueScreenMemory / PrivacyPolicy"
+title: "CmdX / PrivacyPolicy"
 date: 2025-10-18T21:40:12+08:00
-slug: bluescreenmemory/privacypolicy
+slug: CmdX/privacypolicy
 ---
 
 ## Privacy Policy
 
-Lex Tang built the BlueScreenMemory app as a Commercial app. This SERVICE is provided by Lex Tang and is intended for use as is.
+Lex Tang built the CmdX app as a Commercial app. This SERVICE is provided by Lex Tang and is intended for use as is.
 
 This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 
 This app does not collect, use, or share any personal information.
 
-The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at BlueScreenMemory unless otherwise defined in this Privacy Policy.
+The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at CmdX unless otherwise defined in this Privacy Policy.
 
 ## Information Collection and Use
 
