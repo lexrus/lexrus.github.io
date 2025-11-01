@@ -1,0 +1,90 @@
+# Hugo Static Site Tasks
+
+[tasks.serve]
+description = "Start Hugo development server with live reload"
+run = "hugo server"
+
+[tasks.build]
+description = "Build the static site for production"
+run = "hugo --minify"
+
+[tasks.clean]
+description = "Remove the public directory"
+run = "rm -rf public"
+
+[tasks.new]
+description = "Create a new content page"
+run = """
+if [ -z "$1" ]; then
+  echo "Usage: mise run new <filename>"
+  exit 1
+fi
+hugo new "content/$1.md"
+"""
+
+[tasks."new:privacy"]
+description = "Create a new privacy policy page"
+run = """
+if [ -z "$1" ]; then
+  echo "Usage: mise run new:privacy <app-name>"
+  exit 1
+fi
+hugo new "content/${1}_privacypolicy.md"
+"""
+
+[tasks.draft]
+description = "Start server including draft content"
+run = "hugo server -D"
+
+[tasks."compress-icons"]
+description = "Compress all app icons using ImageOptim"
+run = """
+cd static/apps/icons
+open -a ImageOptim .
+"""
+
+[tasks."update-theme"]
+description = "Update PaperMod theme submodule"
+run = "git submodule update --remote themes/PaperMod"
+
+[tasks.deploy]
+description = "Build and prepare for deployment"
+run = """
+hugo --minify
+echo "Site built successfully! Ready to deploy."
+"""
+
+[tasks.validate]
+description = "Validate apps.json file"
+run = """
+if command -v jq &> /dev/null; then
+  cat static/apps/apps.json | jq '.' > /dev/null && echo "✓ apps.json is valid"
+else
+  echo "jq not installed. Install with: brew install jq"
+fi
+"""
+
+[tasks.preview]
+description = "Build and serve production build locally"
+run = """
+hugo --minify
+hugo server --source . --bind 0.0.0.0
+"""
+
+[tasks.stats]
+description = "Show site statistics"
+run = """
+echo "=== Hugo Site Statistics ==="
+echo "Content files:"
+find content -name "*.md" | wc -l
+echo "Public files (after build):"
+if [ -d "public" ]; then
+  find public -type f | wc -l
+else
+  echo "Run 'mise run build' first"
+fi
+"""
+
+[tasks.help]
+description = "Show available tasks"
+run = "mise tasks"
