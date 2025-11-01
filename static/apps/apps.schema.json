@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lex.sh/apps/apps.schema.json",
+  "title": "Lex Apps Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "lastUpdated",
+    "apps"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the apps catalog.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "description": "ISO 8601 timestamp indicating when the catalog was last updated.",
+      "format": "date-time"
+    },
+    "apps": {
+      "type": "array",
+      "description": "List of published applications.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/app"
+      }
+    }
+  },
+  "$defs": {
+    "app": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "briefDescription",
+        "iconURL",
+        "appStoreID",
+        "platforms"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable identifier used in URLs and internal references.",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the application.",
+          "minLength": 1
+        },
+        "briefDescription": {
+          "type": "object",
+          "description": "Localized one-line descriptions keyed by BCP 47 language tag.",
+          "minProperties": 1,
+          "required": [
+            "en"
+          ],
+          "propertyNames": {
+            "pattern": "^[a-z]{2}(?:-[A-Za-z]+)?$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "iconURL": {
+          "type": "string",
+          "description": "Absolute HTTPS URL to the app icon asset.",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "appStoreID": {
+          "type": "string",
+          "description": "Apple App Store identifier.",
+          "pattern": "^\\d+$"
+        },
+        "platforms": {
+          "type": "array",
+          "description": "Supported platforms for the application.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "macOS",
+              "iOS",
+              "iPadOS",
+              "watchOS",
+              "tvOS",
+              "visionOS",
+              "Windows",
+              "Linux",
+              "Android",
+              "web"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
