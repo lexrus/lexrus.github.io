@@ -10,6 +10,11 @@
     "apps"
   ],
   "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional self-reference to this schema document.",
+      "const": "https://lex.sh/apps/apps.schema.json"
+    },
     "version": {
       "type": "string",
       "description": "Semantic version of the apps catalog.",
