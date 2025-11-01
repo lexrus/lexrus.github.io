@@ -43,3 +43,6 @@ Temporary Items
 .apdisk
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,hugo
+
+# Claude ###
+.claude/settings.local.json
