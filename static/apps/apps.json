@@ -1,7 +1,7 @@
 {
   "$schema": "https://lex.sh/apps/apps.schema.json",
   "version": "1.0.0",
-  "lastUpdated": "2025-11-01T09:30:00Z",
+  "lastUpdated": "2025-12-05T11:31:12Z",
   "apps": [
     {
       "id": "swiftymenu",
@@ -136,6 +136,33 @@
       },
       "iconURL": "https://lex.sh/apps/icons/cmdx-icon.png",
       "appStoreID": "6754665762",
+      "platforms": ["macOS"]
+    },
+    {
+      "id": "designmyclock",
+      "name": "DesignMyClock",
+      "briefDescription": {
+        "en": "Design custom analog clock faces that sync with a screensaver for macOS.",
+        "de": "Entwerfen Sie benutzerdefinierte analoge Zifferblätter, die mit einem Bildschirmschoner für macOS synchronisiert werden.",
+        "es": "Diseña carátulas de reloj analógicas personalizadas que se sincronizan con un protector de pantalla para macOS.",
+        "fr": "Concevez des cadrans d'horloge analogiques personnalisés qui se synchronisent avec un économiseur d'écran pour macOS.",
+        "it": "Progetta quadranti di orologio analogici personalizzati che si sincronizzano con uno screensaver per macOS.",
+        "ja": "macOS のスクリーンセーバーと同期するカスタムアナログ時計の文字盤をデザイン。",
+        "ko": "macOS용 화면 보호기와 동기화되는 맞춤형 아날로그 시계 페이스를 디자인하세요.",
+        "nl": "Ontwerp aangepaste analoge klokvlakken die synchroniseren met een screensaver voor macOS.",
+        "pt": "Projete faces de relógio analógicas personalizadas que sincronizam com um protetor de tela para macOS.",
+        "no": "Design egendefinerte analoge klokkeansikter som synkroniseres med en skjermsparer for macOS.",
+        "th": "ออกแบบหน้าปัดนาฬิกาแอนะล็อกแบบกำหนดเองที่ซิงค์กับ screensaver สำหรับ macOS",
+        "tr": "macOS için bir ekran koruyucu ile senkronize olan özel analog saat yüzleri tasarlayın.",
+        "vi": "Thiết kế mặt đồng hồ analog tùy chỉnh đồng bộ hóa với trình bảo vệ màn hình cho macOS.",
+        "sv": "Designa anpassade analoga klockansikten som synkroniseras med en skärmsläckare för macOS.",
+        "fi": "Suunnittele mukautettuja analogisia kellojen näyttöjä, jotka synkronoituvat macOS-näytönsäästäjän kanssa.",
+        "ru": "Создавайте пользовательские аналоговые циферблаты, которые синхронизируются с хранителем экрана для macOS.",
+        "zh-Hans": "设计与 macOS 屏幕保护程序同步的自定义模拟时钟表盘。",
+        "zh-Hant": "設計與 macOS 螢幕保護程式同步的自定義模擬時鐘表面。"
+      },
+      "iconURL": "https://lex.sh/apps/icons/designmyclock-icon.png",
+      "appStoreID": "6755883750",
       "platforms": ["macOS"]
     }
   ]
