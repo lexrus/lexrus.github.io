@@ -39,9 +39,11 @@ params:
     buttons:
       - name: Résumé
         url: resume
+      - name: My Apps
+        url: apps
 
   socialIcons:
-    - name: Twitter
+    - name: X
       url: https://x.com/lexrus
     - name: Telegram
       url: https://t.me/lexrus
